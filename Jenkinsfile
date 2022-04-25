@@ -26,6 +26,7 @@ pipeline {
         stage("Test") {
             steps {
                 echo "Testing Code"
+                sh "docker images"
             }
         }
     }

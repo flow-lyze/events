@@ -5,3 +5,4 @@ uvicorn
 httptools==0.1
 flake8==4.0.1
 pymongo==4.1.0
+pytest==7.1.2
