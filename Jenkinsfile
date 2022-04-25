@@ -16,7 +16,10 @@ pipeline {
             steps {
                 // dir will set directory where we'll working lately
                 // dir definition is spread among other stages (all of them will operate in this dir)
-                echo "Building it..."
+                echo "================== building image =================="
+                dir("events") {
+                    sh "docker build ."
+                }
             }
         }
         stage("Test") {
