@@ -9,4 +9,7 @@ RUN apk add build-base
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install -r requirements.txt
 
+# Running Unit Tests
+RUN pytest app/tests
+
 ENTRYPOINT ["uvicorn", "app.main:server", "--reload"]
