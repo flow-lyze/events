@@ -3,6 +3,10 @@ pipeline {
     options { timeout(time: 1, unit: "HOURS") }
     environment {
         DOCKERHUB_CREDENTIALS = credentials("hpprediction-dockerhub")
+        GITHUB_URL = "https://github.com/flow-lyze/events.git"
+
+        IMAGE_NAME = "hpprediction/event-service"
+        IMAGE_TAG = "1.0.0"
     }
     stages {
         stage("Clean Up") {
@@ -13,7 +17,7 @@ pipeline {
         stage("Clone Repository") {
             steps {
                 echo "Cloning repository..."
-                sh "git clone https://github.com/flow-lyze/events.git"
+                sh "git clone ${GITHUB_URL}"
             }
         }
         stage("Build and Test") {
@@ -22,7 +26,7 @@ pipeline {
                 // dir definition is spread among other stages (all of them will operate in this dir)
                 echo "================== building image =================="
                 dir("events") {
-                    sh "docker build -t hpprediction/event-service:latest ."
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
@@ -35,7 +39,7 @@ pipeline {
         stage("Push") {
             steps {
                 echo "================== docker pushing =================="
-                sh "docker push hpprediction/event-service:latest"
+                sh "docker push  ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
     }
