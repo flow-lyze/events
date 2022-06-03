@@ -57,5 +57,3 @@ class Database(ABC):
                   Usually, methods are useful CRUD operations, that are used in every day routine,
                   The idea of this, is to create custom ORM for different databases.
                   """
-
-
