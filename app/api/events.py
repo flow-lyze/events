@@ -4,7 +4,6 @@ from .. models.api import Event, Response
 
 from pymongo.errors import PyMongoError
 from fastapi import status, Response as Status
-from datetime import datetime
 
 app = App()
 
@@ -17,7 +16,6 @@ async def get_events():
     for o in objects:
         o.pop('_id')
     return objects
-
 
 
 @app.server.get("/")
