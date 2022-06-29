@@ -16,7 +16,7 @@ class MongoConnection:
         self.__connection.close()
 
     def __get_connection(self):
-        client = pymongo.MongoClient(**self.__credentials)
+        client = pymongo.MongoClient(self.__credentials["host"], self.__credentials["port"])
         return client
 
     def __heart_beat(self):
@@ -27,10 +27,10 @@ class Mongo(Database):
 
     KEY = "mongo"
 
-    def __init__(self, db, collection):
+    def __init__(self, db=None, collection=None):
         super().__init__(self.KEY)
-        self.__db = db
-        self.__collection = collection
+        self.__db = db or self._secrets["db"]
+        self.__collection = collection or self._secrets["events_collection"]
 
         # by default, port comes as string
         self._secrets["port"] = int(self._secrets["port"])

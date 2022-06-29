@@ -15,11 +15,11 @@ class Event(BaseModel):
 
         Fields:
             name (str): a string name of event.
-            date (datetime.datetime): a datetime, represents date, when event will happen.
+            date (str): a str, represents date, when event will happen.
             price (optional|int): an optional field, represents price to join an event.
             prize (str): a string, represents winner's prize of event.
     """
     name: str
-    date: datetime.datetime
+    date: str
     price: Optional[int] = None
     prize: str

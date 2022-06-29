@@ -9,4 +9,18 @@ services:
     ports:
       - "27018:27017"
     restart: unless-stopped
+    networks:
+      - common
 
+  app_events:
+    build: .
+    container_name: event_service
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    networks:
+      - common
+
+networks:
+  common:
+    driver: "bridge"
