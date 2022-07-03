@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-
-from .. configs import conf
+from configs import conf
 
 
 CONFIG = conf.Config().CONFIG

@@ -1,3 +1,7 @@
-from . api import core, events
+import uvicorn
 
-server = core.App().server
+from api.events import app
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

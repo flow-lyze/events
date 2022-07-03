@@ -14,4 +14,4 @@ RUN pip3 install -r requirements.txt
 # Running Unit Tests
 RUN pytest app/tests
 
-ENTRYPOINT ["uvicorn", "app.main:server", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+ENTRYPOINT ["python3", "app/main.py"]
