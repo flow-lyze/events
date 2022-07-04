@@ -54,8 +54,10 @@ class Mongo(Database):
             collection = connection[self.__db][self.__collection]
             collection.insert_one(data)
 
-    def delete_record(self):
-        raise NotImplemented
+    def delete_record(self, data):
+        with MongoConnection(self._secrets) as connection:
+            collection = connection[self.__db][self.__collection]
+            collection.delete_one(data)
 
     def edit_record(self, event_to_update: Event):
         with MongoConnection(self._secrets) as connection:

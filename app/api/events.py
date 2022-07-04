@@ -78,4 +78,10 @@ async def edit_event(request: Request, api_status: Status):
     return response
 
 
+@router.delete("/")
+async def delete_event(request: Request):
+    mongo_client = Mongo()
+    return mongo_client.delete_record({})
+
+
 app.include_router(router)
