@@ -1,6 +1,9 @@
 from . database import Database
 
 import pymongo
+from bson.objectid import ObjectId
+
+from models.api import Event
 
 
 class MongoConnection:
@@ -54,8 +57,18 @@ class Mongo(Database):
     def delete_record(self):
         raise NotImplemented
 
-    def edit_record(self):
-        raise NotImplemented
+    def edit_record(self, event_to_update: Event):
+        with MongoConnection(self._secrets) as connection:
+            collection = connection[self.__db][self.__collection]
+
+            event_to_update = dict(event_to_update)
+            event_id = event_to_update.pop("id")
+            result = collection.update_one(
+                {"_id": ObjectId(event_id)},
+                {"$set": event_to_update}
+            )
+
+            return result
 
     def batch_create_records(self):
         raise NotImplemented

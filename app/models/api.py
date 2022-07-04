@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import Optional
-import datetime
 
 
 class Response(BaseModel):
@@ -19,6 +18,7 @@ class Event(BaseModel):
             price (optional|int): an optional field, represents price to join an event.
             prize (str): a string, represents winner's prize of event.
     """
+    id: Optional[str] = None
     name: str
     date: str
     price: Optional[int] = None

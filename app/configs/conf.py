@@ -1,7 +1,7 @@
 import os
 import configparser
 
-from .. utils.common import Singleton
+from utils.common import Singleton
 
 
 class Config(metaclass=Singleton):
