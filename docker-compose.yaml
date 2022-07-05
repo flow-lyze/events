@@ -3,6 +3,12 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
+    volumes:
+      # first, you need to create volume on your own
+      # - `docker volume create mongodbdata`
+      # then, to take path
+      # docker volume inspect mongodbdata
+      - /var/lib/docker/volumes/mongodbdata/_data:/data/db
     environment:
       - PUID=1000
       - PGID=1000
