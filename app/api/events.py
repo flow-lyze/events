@@ -101,7 +101,7 @@ async def delete_event(request: Request, api_status: Status):
         response = Response(status_code=status.HTTP_202_ACCEPTED, message=str(err))
         api_status.status_code = status.HTTP_202_ACCEPTED
     except KeyError as err:
-        err_msg = "To delete event mus be specified `id`"
+        err_msg = "To delete record `id` field should be specified"
         logger.error(err_msg, err)
         response = Response(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, message=err_msg)
         api_status.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY

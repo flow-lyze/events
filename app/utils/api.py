@@ -46,9 +46,7 @@ async def delete_event_object(event_id: str):
     Parameters
     ----------
     event_id : str
-        Object represents an event removed from database.
-        To see more, check `app/models/api.py`.
-
+        Object represents an event_id removed from database.
     Returns
     -------
     None
