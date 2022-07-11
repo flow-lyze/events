@@ -3,7 +3,7 @@ import bson
 import logging
 
 from models.api import Event, Response
-from utils.api import edit_event_object
+from utils.api import edit_event_object, delete_event_object
 from utils.exceptions import MongoNotFoundError, MongoOperationWithoutAffectError
 from utils.log import LogConfig
 
@@ -75,6 +75,37 @@ async def edit_event(request: Request, api_status: Status):
         response = Response(status_code=status.HTTP_202_ACCEPTED, message=str(err))
         api_status.status_code = status.HTTP_202_ACCEPTED
 
+    return response
+
+
+@router.delete("/")
+async def delete_event(request: Request, api_status: Status):
+    body = await request.body()
+    body = json.loads(body.decode("utf-8").replace("'", '"'))
+
+    try:
+        await delete_event_object(body["id"])
+        response = Response(status_code=status.HTTP_200_OK, message="Object was successfully deleted.")
+        api_status.status_code = status.HTTP_200_OK
+    except bson.errors.InvalidId as err:
+        err_msg = f"Got error, while removing record, should be a valid `ObjectID` string: {err}"
+        logger.error(err_msg)
+        response = Response(
+            status_code=status.HTTP_400_BAD_REQUEST, message=err_msg
+        )
+        api_status.status_code = status.HTTP_400_BAD_REQUEST
+    except MongoNotFoundError as err:
+        response = Response(status_code=status.HTTP_404_NOT_FOUND, message=str(err))
+        api_status.status_code = status.HTTP_404_NOT_FOUND
+    except MongoOperationWithoutAffectError as err:
+        response = Response(status_code=status.HTTP_202_ACCEPTED, message=str(err))
+        api_status.status_code = status.HTTP_202_ACCEPTED
+    except KeyError as err:
+        err_msg = "To delete record `id` field should be specified"
+        logger.error(err_msg, err)
+        response = Response(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, message=err_msg)
+        api_status.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+    
     return response
 
 

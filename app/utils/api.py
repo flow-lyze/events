@@ -41,3 +41,22 @@ async def edit_event_object(event_to_update: dict):
     logger.info("Event was successfully edited.")
 
 
+async def delete_event_object(event_id: str):
+    """Delete Event object in database.
+    Parameters
+    ----------
+    event_id : str
+        Object represents an event_id removed from database.
+    Returns
+    -------
+    None
+    """
+    mongo_client = Mongo()
+    result = mongo_client.delete_record(event_id)
+
+    if result.deleted_count == 0:
+        msg = "Specified object wasn't found for `delete` operation."
+        logger.warning(msg)
+        raise MongoNotFoundError(msg)
+
+    logger.info("Event was successfully deleted.")
